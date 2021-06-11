@@ -5,62 +5,59 @@
  */
 package modelo;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author NANDO1
- */
-public class ClienteDAO implements CRUD{
+public class ProductoDAO implements CRUD{
+    
     Connection con;
     Conexion cn=new Conexion();
     PreparedStatement ps;
     ResultSet rs;
-    Cliente co=new Cliente();
+    Producto pro=new Producto();
     
-    public Cliente listarID(String dni){
-    Cliente c=new Cliente();
-    String sql="select * from cliente where Dni=?";
-    try{
+    public Producto listarID(int id){
+      Producto p=new Producto();
+      String sql="select * from producto where Idproducto=?";
+      try{
         con = (com.mysql.jdbc.Connection) cn.Conectar();
         ps=(PreparedStatement) con.prepareStatement(sql);
-        ps.setString(1, dni);
+        ps.setInt(1, id);
         rs=ps.executeQuery();
         while(rs.next()){
-            c.setId(rs.getInt(1));
-            c.setDni(rs.getString(2));
-            c.setNom(rs.getString(3));
-            c.setDir(rs.getString(4));
-            c.setEstado(rs.getString(5));
+        p.setId(rs.getInt(1));
+        p.setNombres(rs.getString(2));
+        p.setPrecio(rs.getDouble(3));
+        p.setStock(rs.getInt(4));
+        p.setEstado(rs.getString(15));
         }
        }
        catch(Exception e)
        {
          
        }
-    return c;
+         return p;
     }
+    //-----MANTENIMIENTO CRUD----///
     @Override
     public List listar() {
-      List<Cliente> lista = new ArrayList<>();
-      String sql="select * from cliente";
+        List<Producto> lista = new ArrayList<>();
+      String sql="select * from Producto";
        try{
         con = (com.mysql.jdbc.Connection) cn.Conectar();
         ps=(PreparedStatement) con.prepareStatement(sql);
         rs=ps.executeQuery();
         while(rs.next()){
-            Cliente c=new Cliente();
-            c.setId(rs.getInt(1));
-            c.setDni(rs.getString(2));
-            c.setNom(rs.getString(3));
-            c.setDir(rs.getString(4));
-            c.setEstado(rs.getString(5));
-            lista.add(c);
+            Producto p = new Producto();
+            p.setId(rs.getInt(1));
+            p.setNombres(rs.getString(2));
+            p.setPrecio(rs.getDouble(3));
+            p.setStock(rs.getInt(4));
+            p.setEstado(rs.getString(5));
+            lista.add(p);
         }
        }
        catch(Exception e)
@@ -70,10 +67,10 @@ public class ClienteDAO implements CRUD{
        return lista;
     }
 
-  
-    public int add(Object[] oj) {
+    @Override
+   public int add(Object[] oj) {
         int r=0;
-        String sql="insert into cliente(Dni,Nombres,Direccion,Estado) values(?,?,?,?)";
+        String sql="insert into producto (Nombres,Precio,Stock,Estado) values(?,?,?,?)";
          try{
         con = (com.mysql.jdbc.Connection) cn.Conectar();
         ps=(PreparedStatement) con.prepareStatement(sql);
@@ -91,10 +88,11 @@ public class ClienteDAO implements CRUD{
          return r;
     }
 
-    
+
+    @Override
     public int actualizar(Object[] oj) {
-        int r=0;
-        String sql="update cliente set Dni=?,Nombres=?,Direccion=?,Estado=? where IdCliente=?";
+       int r=0;
+        String sql="update Producto set Nombres=?,Precio=?,Stock=?,Estado=? where IdProducto=?";
          try{
         con = (com.mysql.jdbc.Connection) cn.Conectar();
         ps=(PreparedStatement) con.prepareStatement(sql);
@@ -115,7 +113,7 @@ public class ClienteDAO implements CRUD{
 
     @Override
     public void eliminar(int id) {
-    String sql="delete from cliente  where IdCliente=?";
+      String sql="delete from Producto where IdProducto=?";
        try{
         con = (com.mysql.jdbc.Connection) cn.Conectar();
         ps=(PreparedStatement) con.prepareStatement(sql);
@@ -127,8 +125,5 @@ public class ClienteDAO implements CRUD{
        {
          
        }
-        
     }
-
-    
 }

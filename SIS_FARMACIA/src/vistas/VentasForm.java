@@ -404,7 +404,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
 
     private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
         guardarVenta();
-        //GuardarDetalle();
+        GuardarDetalle();
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
     void guardarVenta(){
     int idv=1;
@@ -423,12 +423,13 @@ public class VentasForm extends javax.swing.JInternalFrame {
     }
  void GuardarDetalle(){
         String idv=vdao.idVentas();
-        
         int idve=Integer.parseInt(idv);
         for (int i = 0; i < TablaDetalles.getRowCount(); i++) {
             int idp=Integer.parseInt(TablaDetalles.getValueAt(i, 1).toString());
             int cant=Integer.parseInt(TablaDetalles.getValueAt(i, 3).toString());
             double pre=Double.parseDouble(TablaDetalles.getValueAt(i, 4).toString());
+            JOptionPane.showMessageDialog(this, "Cantidad:"+cant);
+
             dv.setIdVentas(idve);
             dv.setIdProductos(idp);
             dv.setCantidad(cant);

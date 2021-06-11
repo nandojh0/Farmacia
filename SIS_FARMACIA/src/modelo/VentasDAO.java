@@ -40,7 +40,7 @@ public class VentasDAO {
     
     public int GuardarVentas(Ventas v){
         Ventas ventas= new Ventas();
-        String sql="INSERT INTO ventas(idClientes,idVendedor,NumeroSerie,FechaVentas,Monto,Estado) VALUES(?,?,?,?,?,?)";
+        String sql="INSERT INTO ventas(idCliente,IdEmpleado,NumeroSerie,FechaVentas,Monto,Estado) VALUES(?,?,?,?,?,?)";
         try{
         con=(com.mysql.jdbc.Connection) cn.Conectar();
         ps=(PreparedStatement) con.prepareStatement(sql);
@@ -59,7 +59,7 @@ public class VentasDAO {
     }
     
     public int GuardarDetalleVentas(DetalleVentas dv){
-        String sql="insert into detalle_ventas(idVentas,idProducto,Cantidad,PrecioVenta) values(?,?,?,?)";
+        String sql="INSERT INTO detalle_ventas(IdVentas,IdProducto,Cantidad,PrecioVenta) values(?,?,?,?)";
         try{
         con=(com.mysql.jdbc.Connection) cn.Conectar();
         ps=(PreparedStatement) con.prepareStatement(sql);
